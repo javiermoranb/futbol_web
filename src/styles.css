@@ -1,0 +1,59 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/styles/flags.css";
+
+html, body { padding: 0; margin: 0;} 
+
+.form-panel p-panel .p-panel .p-panel-header {
+    background: #4CAF50 !important;
+    color: white !important;
+}
+
+.p-card-header{
+    background: #4CAF50 !important;
+    color: white !important;
+    padding: 1rem;
+    box-sizing: border-box;
+    border: 1px solid #dee2e6;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1rem;
+    font-weight: 600;
+}
+:root {
+    --seg-1: rgb(0,   0,   0);
+    --seg-2: rgb(0,   255, 0);
+    --seg-3: rgb(255, 255, 0);
+    --seg-4: rgb(128, 0,   255);
+    --seg-5: rgb(0,   0,   255);
+    --seg-6: rgb(153, 102, 0);
+    --seg-7: rgb(255, 128, 0);
+    --seg-8: rgb(255, 0,   0);
+    --seg-9: rgb(255, 255, 255);
+  }
+  
+.seguimiento {
+    border-radius: 25px;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.seguimiento-1{background-color: var(--seg-1); color: white;}
+.seguimiento-2{background-color: var(--seg-2); color: black}
+.seguimiento-3{background-color: var(--seg-3); color: black;}
+.seguimiento-4{background-color: var(--seg-4); color: white}
+.seguimiento-5{background-color: var(--seg-5); color: white;}
+.seguimiento-6{background-color: var(--seg-6); color: black}
+.seguimiento-7{background-color: var(--seg-7); color: black;}
+.seguimiento-8{background-color: var(--seg-8); color: black}
+.seguimiento-9{background-color: var(--seg-9); color: black;}
+
+.seguimiento-sel-1 span input {background-color: var(--seg-1); color: white}
+.seguimiento-sel-2 span input {background-color: var(--seg-2); color: black}
+.seguimiento-sel-3 span input {background-color: var(--seg-3); color: black}
+.seguimiento-sel-4 span input {background-color: var(--seg-4); color: white}
+.seguimiento-sel-5 span input {background-color: var(--seg-5); color: white}
+.seguimiento-sel-6 span input {background-color: var(--seg-6); color: black}
+.seguimiento-sel-7 span input {background-color: var(--seg-7); color: black}
+.seguimiento-sel-8 span input {background-color: var(--seg-8); color: black}
+.seguimiento-sel-9 span input {background-color: var(--seg-9); color: black}

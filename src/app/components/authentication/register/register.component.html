@@ -1,0 +1,51 @@
+<p-toast position="top-right"></p-toast>
+
+<p-toast position="top-right" key="c" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="flex flex-column" style="flex: 1">
+            <div class="text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            
+        </div>
+    </ng-template>
+</p-toast>
+
+<div class="grid p-fluid main-form-panel login-panel">
+  <div class="col-1"></div>
+  <div class="col-10 form-panel">
+    <div class="card card-container">
+
+      <img id="profile-img" src="assets/img/avatar_2x.png" class="profile-img-card"/>
+
+      <div class="col-12">
+        <label>Username</label>
+        <span class="p-float-label">
+            <input type="text" pInputText [(ngModel)]="form.username"> 
+            <small *ngIf = 'validarRegister &&  !form.username' class="p-error block">Campo obligatorio</small>
+        </span>
+      </div>
+
+        <div class="col-12">
+          <label>Email</label>
+          <span class="p-float-label">
+              <input type="text" pInputText [(ngModel)]="form.email"> 
+              <small *ngIf = 'validarRegister &&  !form.email' class="p-error block">Campo obligatorio</small>
+          </span>
+        </div>
+        
+        <div class="col-12">
+          <label>Password</label>
+          <span class="p-float-label">
+              <input type="password" pInputText [(ngModel)]="form.password"> 
+              <small *ngIf = 'validarRegister &&  !form.password' class="p-error block">Campo obligatorio</small>
+          </span>
+        </div>
+        <div>
+          <p-button label="Registrarse" (click)="register()"></p-button>
+    </div>
+  </div>
+</div>
+

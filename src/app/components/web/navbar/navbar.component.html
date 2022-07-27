@@ -1,0 +1,21 @@
+<nav class="navbar">
+  <!-- LOGO -->
+  <div class="logo">Seguimiento Jugadores</div>
+
+  <ul class="nav-links">
+    <!-- NAVIGATION MENUS -->
+    <div class="menu">
+      <li><a href="/seguimiento" class="nav-link" routerLink="seguimiento">Home </a></li>
+      <li *ngIf="!isLoggedIn">
+        <a href="/login" class="nav-link" routerLink="login">Login</a>
+      </li>
+      <li><a href class="nav-link" (click)="logout()" *ngIf="isLoggedIn">LogOut</a></li>
+    </div>
+  </ul>
+</nav>
+
+
+  
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

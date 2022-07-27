@@ -1,0 +1,292 @@
+<p-toast position="top-right"></p-toast>
+
+<p-toast position="top-right" key="c" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="flex flex-column" style="flex: 1">
+            <div class="text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            
+        </div>
+    </ng-template>
+</p-toast>
+
+
+
+<div class="grid p-fluid main-form-panel">
+    <div [ngClass]="isJugador() ? 'col-12 md:col-6 form-panel': 'col-12 form-panel'">
+        <p-card>
+            <ng-template pTemplate="header">
+                <span class="p-panel-title ng-tns-c62-8 ng-star-inserted" id="p-panel-0_header">Jugador</span>
+            </ng-template>
+            <div class="grid p-fluid">
+                <div class="col-12 xs:col-6">
+                    <label>Nombre</label>
+                    <p-autoComplete [(ngModel)]="jugador.selected" [suggestions]="jugador.filteredList?.jugadores" 
+                        (completeMethod)="jugador.filter(getJugadorService(), $event)" (onSelect)="loadJugadorInfo()" field="nombre" 
+                        [dropdown]="true">
+                        <ng-template let-value pTemplate="item">
+                            <div class="p-d-flex p-ai-center">
+                                <div>{{value.nombre}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <small *ngIf = 'jugador.errors' class="p-error block">{{jugador.errors['required']}}</small>
+                </div>
+            </div>
+
+
+
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-9 lg:col-10">
+                    <label>Apodo</label>
+                    <input type="text" pInputText [(ngModel)]="jugadorApodo"/>
+                    <small *ngIf = 'validarJugador &&  !jugadorApodo' class="p-error block">Campo obligatorio</small>
+                </div>
+                
+                <div class="col-12 md:col-3 lg:col-2">
+                    <label>Año</label>
+                    <p-inputNumber [(ngModel)]="jugadorAnio" inputId="minmax" inputId="minmax" mode="decimal" [min]="0" [max]="currentYear">
+                    </p-inputNumber>
+                    <small *ngIf = 'validarJugador &&  !jugadorAnio' class="p-error block">Campo obligatorio</small>
+                </div>
+            </div>
+
+
+
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-10">
+                    <label>Equipo</label>
+                    <p-autoComplete [(ngModel)]="equipo.selected" [forceSelection]="true" [suggestions]="equipo.filteredList" (completeMethod)="equipo.filter(getCatalogService(), $event)" field="descripcion" [dropdown]="true">
+                        <ng-template let-value pTemplate="item">
+                            <div class="p-d-flex p-ai-center">
+                                <div>{{value.descripcion}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <small *ngIf = 'equipo.errors' class="p-error block">{{equipo.errors['required']}}</small>
+                </div>
+                
+                <div class="col-12 md:col-2">
+                    <label>№</label>
+                    <p-inputNumber [(ngModel)]="jugadorNumero" inputId="minmax" inputId="minmax" mode="decimal" [min]="0" [max]="99">
+                    </p-inputNumber>
+                    <small *ngIf = 'validarJugador &&  !jugadorNumero' class="p-error block">Campo obligatorio</small>
+                </div>
+            </div>
+
+
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-4">
+                    <label>Pie</label>
+                    <p-autoComplete [(ngModel)]="pie.selected" [forceSelection]="true" [suggestions]="pie.filteredList" (completeMethod)="pie.filter(getCatalogService(), $event)" field="descripcion" [dropdown]="true">
+                        <ng-template let-value pTemplate="item">
+                            <div class="p-d-flex p-ai-center">
+                                <div>{{value.descripcion}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <small *ngIf = 'pie.errors' class="p-error block">{{pie.errors['required']}}</small>
+                </div>
+                
+                <div class="col-12 md:col-4">
+                    <label>Somatotipo</label>
+                    <p-autoComplete [(ngModel)]="somatotipo.selected" [forceSelection]="true" [suggestions]="somatotipo.filteredList" (completeMethod)="somatotipo.filter(getCatalogService(), $event)" field="descripcion" [dropdown]="true">
+                        <ng-template let-value pTemplate="item">
+                            <div class="p-d-flex p-ai-center">
+                                <div>{{value.descripcion}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <small *ngIf = 'somatotipo.errors' class="p-error block">{{somatotipo.errors['required']}}</small>
+                </div>
+
+                <div class="col-12 md:col-4">
+                    <label>Estatura</label>
+                    <p-inputNumber [(ngModel)]="jugadorEstatura" inputId="jEstatura" inputId="minmax" mode="decimal" [min]="149" [max]="206"></p-inputNumber>
+                    <p-slider [(ngModel)]="jugadorEstatura" [min]="149" [max]="206"></p-slider>
+                    <small *ngIf = 'validarJugador &&  !jugadorEstatura' class="p-error block">Campo obligatorio</small>
+                </div>
+            </div>
+
+
+            
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-6">
+                    <label>País Nacimiento</label>
+                    <p-autoComplete [(ngModel)]="paisNacimiento.selected" [forceSelection]="true" [suggestions]="paisNacimiento.filteredList" (completeMethod)="paisNacimiento.filter(getCatalogService(), $event)" field="nombre" [dropdown]="true">
+                        <ng-template let-value pTemplate="item">
+                            <div class="p-d-flex p-ai-center country-item">
+                                <img src="assets/img/flag/flag_placeholder.png" [class]="'flag flag-' + value.codigoISO2.toLowerCase()" />
+                                <div class="contry-name">{{value.nombre}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <small *ngIf = 'paisNacimiento.errors' class="p-error block">{{paisNacimiento.errors['required']}}</small>
+                </div>
+                
+                <div class="col-12 md:col-6">
+                    <label>Nacionalidad</label>
+                    <p-autoComplete [(ngModel)]="paisNacionalidad.selected" [forceSelection]="true" [suggestions]="paisNacionalidad.filteredList" (completeMethod)="paisNacionalidad.filter(getCatalogService(), $event)" field="nombre" [dropdown]="true">
+                        <ng-template let-value pTemplate="item">
+                            <div class="p-d-flex p-ai-center country-item">
+                                <img src="assets/img/flag/flag_placeholder.png" [class]="'flag flag-' + value.codigoISO2.toLowerCase()" />
+                                <div>{{value.nombre}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <small *ngIf = 'paisNacionalidad.errors' class="p-error block">{{paisNacionalidad.errors['required']}}</small>
+                </div>
+            </div>
+
+            
+
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-6">
+                    <label>Posición 1</label>
+                    <p-autoComplete [(ngModel)]="posicion1.selected" [forceSelection]="true" [suggestions]="posicion1.filteredList" (completeMethod)="posicion1.filter(getCatalogService(), $event)" field="descripcion" [dropdown]="true">
+                        <ng-template let-value pTemplate="item">
+                            <div class="p-d-flex p-ai-center">
+                                <div>{{value.descripcion}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <small *ngIf = 'posicion1.errors' class="p-error block">{{posicion1.errors['required']}}</small>
+                </div>
+                
+                <div class="col-12 md:col-6">
+                    <label>Posición 2</label>
+                    <p-autoComplete [(ngModel)]="posicion2.selected" [forceSelection]="true" [suggestions]="posicion2.filteredList" (completeMethod)="posicion2.filter(getCatalogService(), $event)" field="descripcion" [dropdown]="true">
+                        <ng-template let-value pTemplate="item">
+                            <div class="p-d-flex p-ai-center">
+                                <div>{{value.descripcion}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <small *ngIf = 'posicion2.errors' class="p-error block">{{posicion2.errors['required']}}</small>
+                </div>
+            </div>
+
+            <div class="grid p-fluid">
+                <div class="col-12">
+                    <label>Perfiles</label>
+                    <p-multiSelect [options]="perfil.filteredList" [(ngModel)]="perfil.selected" defaultLabel="Seleccione los perfiles" optionLabel="descripcion" display="chip"></p-multiSelect>
+                </div>
+            </div>
+
+            <ng-template pTemplate="footer">
+                <div class="grid p-fluid">
+                    <div class="col-6 md:col-9"></div>
+                    <div class="col-6 md:col-3" >
+                        <p-button *ngIf = 'isJugador(); else add' label="Editar" icon="pi pi-user-edit" iconPos="right" (onClick)="updateJugador()"></p-button>
+                    </div>
+
+                    <ng-template #add>
+                        <p-button  label="Añadir" icon="pi pi-user-plus" iconPos="right" (onClick)="saveJugador()"></p-button>
+                    </ng-template>
+                </div>
+            </ng-template>
+        </p-card>
+    </div>
+
+
+
+
+
+
+    <div class="col-12 md:col-6 form-panel" *ngIf = 'isJugador()'>
+        <p-card>
+            <ng-template pTemplate="header">
+                <span class="p-panel-title ng-tns-c62-8 ng-star-inserted" id="p-panel-0_header">Valoración</span>
+            </ng-template>
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-4">
+                    <label>Seguimiento</label>
+                    <p-autoComplete [(ngModel)]="seguimiento.selected" [forceSelection]="true" [suggestions]="seguimiento.filteredList" (completeMethod)="seguimiento.filter(getCatalogService(), $event)" [class]="'seguimiento-sel-' + seguimiento.selected?.id_seguimiento" field="descripcion" [dropdown]="true">
+                        <ng-template let-value pTemplate="item">
+                            <div class="p-d-flex p-ai-center" [class]="'seguimiento seguimiento-' + value.id_seguimiento">
+                                <div>{{value.descripcion}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <small *ngIf = 'seguimiento.errors' class="p-error block">{{seguimiento.errors['required']}}</small>
+                </div>
+                
+                <div class="col-12 md:col-4">
+                    <label>Visualización</label>
+                    <p-autoComplete [(ngModel)]="visualizacion.selected" [forceSelection]="true" [suggestions]="visualizacion.filteredList" (completeMethod)="visualizacion.filter(getCatalogService(), $event)" field="descripcion" [dropdown]="true">
+                        <ng-template let-value pTemplate="item">
+                            <div class="p-d-flex p-ai-center">
+                                <div>{{value.descripcion}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <small *ngIf = 'visualizacion.errors' class="p-error block">{{visualizacion.errors['required']}}</small>
+                </div>
+
+                <div class="col-12 md:col-4">
+                    <label>Fecha partido</label>
+                    <p-calendar [(ngModel)]="valFechaPartido" [showIcon]="true" inputId="icon" dateFormat="dd/mm/yy"></p-calendar>
+                    <small *ngIf = 'validarValoracion &&  !valFechaPartido' class="p-error block">Campo obligatorio</small>
+                </div>
+            </div>
+
+            
+
+            <div class="grid p-fluid">
+                <div class="col-12">
+                    <label>Campeonato</label>
+                    <input type="text" pInputText [(ngModel)]="valCampeonato"/>
+                    <small *ngIf = 'validarValoracion &&  !valCampeonato' class="p-error block">Campo obligatorio</small>
+                </div>
+            </div>
+
+
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-6">
+                    <label>Local</label>
+                    <p-autoComplete [(ngModel)]="local.selected" [forceSelection]="true" [suggestions]="local.filteredList" (completeMethod)="local.filter(getCatalogService(), $event)" field="descripcion" [dropdown]="true">
+                        <ng-template let-value pTemplate="item">
+                            <div class="p-d-flex p-ai-center">
+                                <div>{{value.descripcion}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <small *ngIf = 'local.errors' class="p-error block">{{local.errors['required']}}</small>
+                </div>
+                <div class="col-12 md:col-6">
+                    <label>Visitante</label>
+                    <p-autoComplete [(ngModel)]="visitante.selected" [forceSelection]="true" [suggestions]="visitante.filteredList" (completeMethod)="visitante.filter(getCatalogService(), $event)" field="descripcion" [dropdown]="true">
+                        <ng-template let-value pTemplate="item">
+                            <div class="p-d-flex p-ai-center">
+                                <div>{{value.descripcion}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    <small *ngIf = 'visitante.errors' class="p-error block">{{visitante.errors['required']}}</small>
+                </div>
+            </div>
+
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-12">
+                    <label>Descripción</label>
+                    <textarea rows="5" [autoResize]="true" pInputTextarea maxlength="1000" [(ngModel)]="valDescripcion"></textarea>
+                    <small *ngIf = 'validarValoracion &&  !valDescripcion' class="p-error block">Campo obligatorio</small>
+                </div>
+            </div>
+
+            <ng-template pTemplate="footer">
+                <div class="grid p-fluid">
+                    <div class="col-6 md:col-9"></div>
+                    <div class="col-6 md:col-3" >
+                        <p-button label="Guardar" icon="pi pi-save" iconPos="right" (onClick)="saveValoracion()"></p-button>
+                    </div>
+                </div>
+            </ng-template>
+        </p-card>
+    </div>
+</div>
+
+<valoracion-table [jugador]="jugador.selected" [loadFormSubject]="loadFormSubject.asObservable()" *ngIf = 'isJugador()'></valoracion-table>

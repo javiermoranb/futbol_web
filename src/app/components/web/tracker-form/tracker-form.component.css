@@ -1,0 +1,13 @@
+.main-form-panel{
+    margin: 0.5em;
+}
+
+.country-item{
+    display: flex;
+    align-items: center;
+}
+.contry-name{
+    padding-left: 0.5em;
+}
+
+
