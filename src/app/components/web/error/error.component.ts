@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Message,MessageService} from 'primeng/api';
 import { TokenStorageService } from '../../authentication/_services/token-storage.service';
+import { Constants } from 'src/app/utils/constants';
 
 @Component({
   selector: 'error',
@@ -18,7 +19,14 @@ export class ErrorComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
+      let role = this.tokenStorage.getUser().role;
+      if(role == Constants.ROLE_SCOUTER || role == Constants.ROLE_ADMIN){
+        this.isLoggedIn = true;
+      }else{
+        this.errorNoLogged = [
+          {severity:'error', summary:'Error', detail:'Permisos insuficientes, por favor contacte con el administrador de la página'}
+        ];
+      }
     }else {
       this.errorNoLogged = [
         {severity:'error', summary:'Error', detail:'Por favor inicie sesión'}

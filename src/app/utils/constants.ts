@@ -11,4 +11,9 @@ export class Constants {
     public static TABLE_SOMATOTIPO:string = "somatotipo"
     public static TABLE_VALORACION:string = "valoracion"
     public static TABLE_VISUALIZACION:string = "visualizacion"
+
+    
+    public static ROLE_USER:string = "ROLE_USER"
+    public static ROLE_SCOUTER:string = "ROLE_SCOUTER"
+    public static ROLE_ADMIN:string = "ROLE_ADMIN"
  }

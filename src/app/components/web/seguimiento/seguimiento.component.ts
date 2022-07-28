@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from '../../authentication/_services/token-storage.service';
+import { Constants } from 'src/app/utils/constants';
 
 @Component({
   selector: 'seguimiento',
@@ -15,7 +16,10 @@ export class SeguimientoComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
+      let role = this.tokenStorage.getUser().role;
+      if(role == Constants.ROLE_SCOUTER || role == Constants.ROLE_ADMIN){
+        this.isLoggedIn = true;
+      }
     }
   }
 
