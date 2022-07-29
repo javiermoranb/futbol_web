@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
+import { Constants } from 'src/app/utils/constants';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,11 +13,17 @@ export class CatalogService {
 
   
 
-  async getCatalog(table: string, filter: string) {
+  async getCatalog(table: string, filter: string, orderBy: string) {
     let urlFilter = ''
     if (filter){
       urlFilter = '?desc='+filter
     }
+
+    if(orderBy){
+      urlFilter += urlFilter?'&':'?'
+      urlFilter += Constants.URL_PARAM_ORDER_BY+'='+orderBy
+    }
+
     const basePath: string = environment.serverPath + 'catalog/';
     const get$ = this.http.get( basePath + table + urlFilter);
     const res = await lastValueFrom(get$)

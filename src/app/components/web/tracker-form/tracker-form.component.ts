@@ -32,18 +32,18 @@ export class TrackerFormComponent implements OnInit {
   //jugador
 
   jugador = new JugadorAutocomplete();
-  equipo = new CatalogAutocomplete(Constants.TABLE_EQUIPO);
-  pie = new CatalogAutocomplete(Constants.TABLE_PIE);
-  somatotipo = new CatalogAutocomplete(Constants.TABLE_SOMATOTIPO);
-  posicion1 = new CatalogAutocomplete(Constants.TABLE_POSICION);
-  posicion2 = new CatalogAutocomplete(Constants.TABLE_POSICION);  
-  perfil = new CatalogAutocomplete(Constants.TABLE_PERFIL);
+  equipo = new CatalogAutocomplete(Constants.TABLE_EQUIPO, '');
+  pie = new CatalogAutocomplete(Constants.TABLE_PIE, '');
+  somatotipo = new CatalogAutocomplete(Constants.TABLE_SOMATOTIPO, '');
+  posicion1 = new CatalogAutocomplete(Constants.TABLE_POSICION, Constants.URL_PARAM_ID);
+  posicion2 = new CatalogAutocomplete(Constants.TABLE_POSICION, Constants.URL_PARAM_ID);  
+  perfil = new CatalogAutocomplete(Constants.TABLE_PERFIL, '');
   paisNacimiento = new PaisAutocomplete();
   paisNacionalidad = new PaisAutocomplete();
-  visualizacion = new CatalogAutocomplete(Constants.TABLE_VISUALIZACION);
-  seguimiento = new CatalogAutocomplete(Constants.TABLE_SEGUIMIENTO);
-  local = new CatalogAutocomplete(Constants.TABLE_EQUIPO);
-  visitante = new CatalogAutocomplete(Constants.TABLE_EQUIPO);
+  visualizacion = new CatalogAutocomplete(Constants.TABLE_VISUALIZACION, '');
+  seguimiento = new CatalogAutocomplete(Constants.TABLE_SEGUIMIENTO, Constants.URL_PARAM_ID);
+  local = new CatalogAutocomplete(Constants.TABLE_EQUIPO, '');
+  visitante = new CatalogAutocomplete(Constants.TABLE_EQUIPO, '');
   
   jugadorApodo!: string;
   jugadorAnio!: number;
@@ -69,7 +69,7 @@ export class TrackerFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.catalogService.getCatalog(this.perfil.table, '').then(data => this.perfil.filteredList = data);
+    this.catalogService.getCatalog(this.perfil.table, '', '').then(data => this.perfil.filteredList = data);
   }
 
   getCatalogService(){
@@ -112,8 +112,7 @@ export class TrackerFormComponent implements OnInit {
   validateJugador(){
     this.validarJugador = true;
     let required = [this.jugador, this.jugadorApodo, this.jugadorAnio, this.equipo, 
-      this.jugadorNumero, this.pie, this.somatotipo, this.jugadorEstatura,
-      this.paisNacimiento, this.paisNacionalidad, this.posicion1, this.posicion2]
+      this.paisNacimiento, this.posicion1]
 
 
     return Validation.validateRequired(required);
@@ -143,6 +142,7 @@ export class TrackerFormComponent implements OnInit {
 
   async saveJugador() {
     if(this.validateJugador()){
+      console.log('valid');
       (await (this.jugadorService.postJugador(this.instanceJugador(0)))).subscribe({
         next: (response: any) => {
           console.log(response)
@@ -160,6 +160,9 @@ export class TrackerFormComponent implements OnInit {
           console.log('complete saveJugador');
         },
       });
+    }else{
+      
+      console.log('invalid');
     }
   }
 

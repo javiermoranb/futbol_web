@@ -16,4 +16,13 @@ export class Constants {
     public static ROLE_USER:string = "ROLE_USER"
     public static ROLE_SCOUTER:string = "ROLE_SCOUTER"
     public static ROLE_ADMIN:string = "ROLE_ADMIN"
+
+
+    public static URL_PARAM_ID:string = 'id'
+    public static URL_PARAM_ID_VALORACION:string = 'id_valoracion'
+    public static URL_PARAM_ID_JUGADOR:string = 'id_jugador'
+    public static URL_PARAM_DESCRIPCION:string = 'desc'
+    public static URL_PARAM_MIN:string = 'min'
+    public static URL_PARAM_NOMBRE:string = 'nombre'
+    public static URL_PARAM_ORDER_BY:string = 'order_by'
  }

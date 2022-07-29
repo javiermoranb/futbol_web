@@ -73,7 +73,6 @@
                     <label>№</label>
                     <p-inputNumber [(ngModel)]="jugadorNumero" inputId="minmax" inputId="minmax" mode="decimal" [min]="0" [max]="99">
                     </p-inputNumber>
-                    <small *ngIf = 'validarJugador &&  !jugadorNumero' class="p-error block">Campo obligatorio</small>
                 </div>
             </div>
 
@@ -88,7 +87,6 @@
                             </div>
                         </ng-template>
                     </p-autoComplete>
-                    <small *ngIf = 'pie.errors' class="p-error block">{{pie.errors['required']}}</small>
                 </div>
                 
                 <div class="col-12 md:col-4">
@@ -100,14 +98,12 @@
                             </div>
                         </ng-template>
                     </p-autoComplete>
-                    <small *ngIf = 'somatotipo.errors' class="p-error block">{{somatotipo.errors['required']}}</small>
                 </div>
 
                 <div class="col-12 md:col-4">
                     <label>Estatura</label>
                     <p-inputNumber [(ngModel)]="jugadorEstatura" inputId="jEstatura" inputId="minmax" mode="decimal" [min]="149" [max]="206"></p-inputNumber>
                     <p-slider [(ngModel)]="jugadorEstatura" [min]="149" [max]="206"></p-slider>
-                    <small *ngIf = 'validarJugador &&  !jugadorEstatura' class="p-error block">Campo obligatorio</small>
                 </div>
             </div>
 
@@ -137,7 +133,6 @@
                             </div>
                         </ng-template>
                     </p-autoComplete>
-                    <small *ngIf = 'paisNacionalidad.errors' class="p-error block">{{paisNacionalidad.errors['required']}}</small>
                 </div>
             </div>
 
@@ -165,7 +160,6 @@
                             </div>
                         </ng-template>
                     </p-autoComplete>
-                    <small *ngIf = 'posicion2.errors' class="p-error block">{{posicion2.errors['required']}}</small>
                 </div>
             </div>
 
