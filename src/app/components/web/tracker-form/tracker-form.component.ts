@@ -33,11 +33,11 @@ export class TrackerFormComponent implements OnInit {
 
   jugador = new JugadorAutocomplete();
   equipo = new CatalogAutocomplete(Constants.TABLE_EQUIPO, '');
-  pie = new CatalogAutocomplete(Constants.TABLE_PIE, '');
+  pie = new CatalogAutocomplete(Constants.TABLE_PIE, Constants.URL_PARAM_ID);
   somatotipo = new CatalogAutocomplete(Constants.TABLE_SOMATOTIPO, '');
   posicion1 = new CatalogAutocomplete(Constants.TABLE_POSICION, Constants.URL_PARAM_ID);
   posicion2 = new CatalogAutocomplete(Constants.TABLE_POSICION, Constants.URL_PARAM_ID);  
-  perfil = new CatalogAutocomplete(Constants.TABLE_PERFIL, '');
+  perfil = new CatalogAutocomplete(Constants.TABLE_PERFIL, Constants.URL_PARAM_ID);
   paisNacimiento = new PaisAutocomplete();
   paisNacionalidad = new PaisAutocomplete();
   visualizacion = new CatalogAutocomplete(Constants.TABLE_VISUALIZACION, '');
@@ -69,7 +69,7 @@ export class TrackerFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.catalogService.getCatalog(this.perfil.table, '', '').then(data => this.perfil.filteredList = data);
+    this.catalogService.getCatalog(this.perfil.table, '', Constants.URL_PARAM_ID).then(data => this.perfil.filteredList = data);
   }
 
   getCatalogService(){
