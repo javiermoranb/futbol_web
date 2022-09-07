@@ -1,4 +1,6 @@
-<div class="card" class="col-12">
+<loading *ngIf="loading"></loading>
+<error></error>
+<div class="card" class="col-12"  *ngIf="isLoggedIn">
     
 
     <p-table #dt *ngIf = 'valoraciones && valoraciones.length > 0' [value]="valoraciones" [rows]="10" [paginator]="true" 
@@ -6,24 +8,29 @@
         'campeonato', 'descripcion_local', 'descripcion_visitante', 'descripcion_seguimiento']" 
         responsiveLayout="scroll"
         [(selection)]="selectedValoraciones" [rowHover]="true" dataKey="id_valoracion"
-        currentPageReportTemplate="Valoraciones {first} a {last} - Total valoraciones {totalRecords}" [showCurrentPageReport]="true">
+        currentPageReportTemplate="Valoraciones {first} a {last} - Total valoraciones {totalRecords}" [showCurrentPageReport]="true"
+        [filterDelay]="0" [globalFilterFields]="['scout.nombre', 'jugador.nombre', 'visualizacion.descripcion', 'campeonato', 'equipo_local.descripcion', 'equipo_visitante.descripcion', 'seguimiento.descripcion']"
+        [loading]="loading">
         <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Valoraciones</h5>
-                <div class="p-toolbar-group-right ng-star-inserted">
-                    <button pButton pRipple label="Export" (click)="exportInforme()" icon="pi pi-upload" class="p-button-help"></button>
-                </div>
+            <div class="table-header">
+                List of Customers
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event).target.value, 'contains')" placeholder="Global Search" />
+                </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="scout.nombre">Scout <p-sortIcon field="scout.nombre"></p-sortIcon></th>
+                <th pSortableColumn="jugador.nombre">Jugador <p-sortIcon field="jugador.nombre"></p-sortIcon></th>
                 <th pSortableColumn="fecha" type="date">Fecha <p-sortIcon field="fecha"></p-sortIcon></th>
                 <th pSortableColumn="visualizacion.descripcion">Visualizacion <p-sortIcon field="visualizacion.descripcion"></p-sortIcon></th>
                 <th pSortableColumn="campeonato">Campeonato <p-sortIcon field="campeonato"></p-sortIcon></th>
                 <th pSortableColumn="equipo_local.descripcion">Local <p-sortIcon field="equipo_local.descripcion"></p-sortIcon></th>
                 <th pSortableColumn="equipo_visitante.descripcion">Visitante <p-sortIcon field="equipo_visitante.descripcion"></p-sortIcon></th>
                 <th pSortableColumn="seguimiento.descripcion">Seguimiento <p-sortIcon field="seguimiento.descripcion"></p-sortIcon></th>
+                <th></th>
                 <th></th>
             </tr>
         </ng-template>
@@ -33,6 +40,7 @@
                     <p-tableCheckbox [value]="valoracion"></p-tableCheckbox>
                 </td-->
                 <td>{{valoracion.scout.nombre}}</td>
+                <td>{{valoracion.jugador.nombre}}</td>
                 <td>{{valoracion.fecha | date: 'dd/MM/yyyy'}}</td>
                 <td>{{valoracion.visualizacion.descripcion}}</td>
                 <td>{{valoracion.campeonato}}</td>
@@ -42,6 +50,9 @@
                     <span [class]="'seguimiento seguimiento-' + valoracion.seguimiento.id_seguimiento">{{valoracion.seguimiento.descripcion}}</span></td>
                 <td>
                     <button pButton pRipple (click)="deleteValoracion(valoracion)" icon="pi pi-trash" class="p-button-rounded p-button-warning" ></button>
+                </td>
+                <td>
+                    <button pButton pRipple (click)="exportInforme(valoracion)" icon="pi pi-upload" class="p-button-rounded" ></button>
                 </td>
             </tr>
         </ng-template>

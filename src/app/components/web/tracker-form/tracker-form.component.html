@@ -48,7 +48,7 @@
                 
                 <div class="col-12 md:col-3 lg:col-2">
                     <label>Año (Birth year)</label>
-                    <p-inputNumber [(ngModel)]="jugadorAnio" inputId="minmax" inputId="minmax" mode="decimal" [min]="0" [max]="currentYear">
+                    <p-inputNumber [(ngModel)]="jugadorAnio" mode="decimal" locale="es-ES" inputId="minmax" inputId="minmax" mode="decimal" [min]="0" [max]="currentYear">
                     </p-inputNumber>
                     <small *ngIf = 'validarJugador &&  !jugadorAnio' class="p-error block">Campo obligatorio</small>
                 </div>

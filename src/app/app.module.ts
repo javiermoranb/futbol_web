@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ErrorComponent } from './components/web/error/error.component';
 import { HeaderComponent } from './components/web/header/header.component';
+import { LoadingComponent } from './components/web/loading/loading.component';
 import { ValoracionTableComponent } from './components/web/valoracion-table/valoracion-table.component';
 import { TrackerFormComponent } from './components/web/tracker-form/tracker-form.component';
 
@@ -39,6 +40,7 @@ import {StyleClassModule} from 'primeng/styleclass';
 import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
 import {ToolbarModule} from 'primeng/toolbar';
+import { ValoracionesComponent } from './components/web/valoraciones/valoraciones.component';
 
 @NgModule({
   declarations: [
@@ -47,10 +49,12 @@ import {ToolbarModule} from 'primeng/toolbar';
     HeaderComponent,
     ValoracionTableComponent, 
     TrackerFormComponent,
+    LoadingComponent,
     LoginComponent,
     NavbarComponent,
     SeguimientoComponent,
-    RegisterComponent
+    RegisterComponent,
+    ValoracionesComponent
   ],
   imports: [
     BrowserModule,

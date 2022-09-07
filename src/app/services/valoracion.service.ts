@@ -14,7 +14,11 @@ export class ValoracionService {
   constructor(private http: HttpClient) { }
 
   async getValoracion(jugadorId:number = 0) {
-    let urlFilter = '?id_jugador='+jugadorId
+    let urlFilter = ""
+    console.log('jugadorId: ' +jugadorId);
+    if (jugadorId>0){
+      urlFilter = '?id_jugador='+jugadorId
+    }
     
     const get$ = this.http.get<any>( this.basePath + urlFilter);
     return get$

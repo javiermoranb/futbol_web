@@ -1,25 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Subject } from "rxjs";
-import { ConfirmationService } from 'primeng/api';
-import { MessageService } from 'primeng/api';
+import { Component, OnInit } from '@angular/core';
+import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 
-import { InformeService } from 'src/app/services/informe.service';
+import { Constants } from 'src/app/utils/constants';
 import { Valoracion } from 'src/app/entities/valoracion';
+import { InformeService } from 'src/app/services/informe.service';
+import { TokenStorageService } from '../../authentication/_services/token-storage.service';
 import { ValoracionService } from 'src/app/services/valoracion.service';
-import { Jugador } from 'src/app/entities/jugador';
 
 @Component({
-  selector: 'valoracion-table',
-  templateUrl: './valoracion-table.component.html',
-  styleUrls: ['./valoracion-table.component.css'],
+  selector: 'valoraciones',
+  templateUrl: './valoraciones.component.html',
+  styleUrls: ['./valoraciones.component.css'],
   providers: [MessageService,ConfirmationService]
 })
-export class ValoracionTableComponent implements OnInit {
+export class ValoracionesComponent implements OnInit {
 
-  @Input('jugador')
-  jugador!: Jugador;
-  @Input('loadFormSubject') 
-  loadFormSubject: any;
+  isLoggedIn = false;
 
   valDialog!: boolean;
   valoraciones!: Valoracion[];
@@ -29,27 +25,28 @@ export class ValoracionTableComponent implements OnInit {
   pdfSrc!: any;
   tempRetFileData!: any;
 
-
+  loading: boolean = true;
 
   constructor(private informeService: InformeService,
               private valoracionService: ValoracionService,
               private messageService: MessageService, 
-              private confirmationService: ConfirmationService) { 
-                
-    this.loadFormSubject = new Subject<boolean>();
-  }
-
+              private confirmationService: ConfirmationService,
+              private tokenStorage: TokenStorageService, 
+              private primengConfig: PrimeNGConfig) {   }
+              
   ngOnInit(): void {
-    this.loadFormSubject.subscribe((response: any) => {
-    if(response){
-        console.log('loadValoraciones')
-        this.loadValoraciones();
+    if (this.tokenStorage.getToken()) {
+      let role = this.tokenStorage.getUser().role;
+      if(role == Constants.ROLE_SCOUTER || role == Constants.ROLE_ADMIN){
+        this.isLoggedIn = true;
       }
-    })
+    }
+    this.loadValoraciones();
+    this.primengConfig.ripple = true;
   }
 
   async loadValoraciones(){
-    (await (this.valoracionService.getValoracion(this.jugador.id_jugador))).subscribe({
+    (await (this.valoracionService.getValoracion())).subscribe({
       next: (response: any) => {
         this.valoraciones = response.valoraciones;
         
@@ -59,7 +56,7 @@ export class ValoracionTableComponent implements OnInit {
         
       },
       complete: () => {
-        console.log('completed getValoracion');
+        this.loading = false;
       },
     });
   }
@@ -87,12 +84,11 @@ export class ValoracionTableComponent implements OnInit {
     });
   }
 
-  async exportInforme(){
+  async exportInforme(valoracion: any){
     let tempBlob = null;
 
-    (await (this.informeService.getInforme(this.jugador.id_jugador))).subscribe({
+    (await (this.informeService.getInforme(valoracion.jugador.id_jugador))).subscribe({
       next: (res: any) => {  
-
         tempBlob = new Blob([res], { type: 'application/pdf' });
         this.pdfSrc = window.URL.createObjectURL(tempBlob)
         this.displayModal = true;
@@ -107,7 +103,7 @@ export class ValoracionTableComponent implements OnInit {
   downloadPDF(){
     var link = document.createElement('a');
     link.href = this.pdfSrc;
-    link.download = this.jugador.nombre+Date.now()+".pdf";
+    link.download = "informe-"+Date.now()+".pdf";
     link.click();
   }
 
