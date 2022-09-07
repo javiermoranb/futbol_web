@@ -1,0 +1,6 @@
+.table-header {
+    display: flex;
+    justify-content: space-between;    
+    text-align: left;
+    font-size: 1.5rem;
+}
