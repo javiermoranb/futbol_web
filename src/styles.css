@@ -31,6 +31,7 @@ html, body { padding: 0; margin: 0;}
     --seg-8: rgb(255, 128, 0);
     --seg-9: rgb(255, 0,   0);
     --seg-10: rgb(255, 255, 255);
+    --seg-11: rgb(0,   0,   0);
   }
   
 .seguimiento {
@@ -50,6 +51,7 @@ html, body { padding: 0; margin: 0;}
 .seguimiento-8{background-color: var(--seg-8); color: black}
 .seguimiento-9{background-color: var(--seg-9); color: black;}
 .seguimiento-10{background-color: var(--seg-10); color: black;}
+.seguimiento-11{background-color: var(--seg-1); color: white; }
 
 .seguimiento-sel-1 span input {background-color: var(--seg-1); color: white}
 .seguimiento-sel-2 span input {background-color: var(--seg-2); color: black}
@@ -61,3 +63,4 @@ html, body { padding: 0; margin: 0;}
 .seguimiento-sel-8 span input {background-color: var(--seg-8); color: black}
 .seguimiento-sel-9 span input {background-color: var(--seg-9); color: black}
 .seguimiento-sel-10 span input {background-color: var(--seg-10); color: black}
+.seguimiento-sel-11 span input {background-color: var(--seg-1); color: white}
