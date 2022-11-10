@@ -58,6 +58,9 @@ export class TrackerFormComponent implements OnInit {
 
   validarJugador: boolean = false;
   validarValoracion: boolean = false;
+
+  adminRole: string = Constants.ROLE_ADMIN
+  role: string = this.tokenStorage.getUser().role
   
   constructor(
     private primengConfig: PrimeNGConfig,
