@@ -266,7 +266,7 @@
             <div class="grid p-fluid">
                 <div class="col-12 md:col-12">
                     <label>Informe del jugador (Player description and observations)</label>
-                    <textarea rows="5" [autoResize]="true" pInputTextarea maxlength="1000" [(ngModel)]="valDescripcion"></textarea>
+                    <textarea rows="5" [autoResize]="true" pInputTextarea maxlength="4000" [(ngModel)]="valDescripcion"></textarea>
                     <small *ngIf = 'validarValoracion &&  !valDescripcion' class="p-error block">Campo obligatorio</small>
                 </div>
             </div>
